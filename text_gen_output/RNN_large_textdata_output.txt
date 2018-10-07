@@ -1,0 +1,20 @@
+-------------------
+input chars = 
+ his eyes she eclipses and predominates the whole of her sex. it was not that he felt any emotion ak"
+predicted chars = 
+ing the matrer in the trop that i have been sure of the greve of the farth of the coundess of the re"
+-------------------
+input chars = 
+his eyes she eclipses and predominates the whole of her sex. it was not that he felt any emotion aki"
+predicted chars = 
+ng the matrer in the trop that i have been sure of the greve of the farth of the coundess of the rea"
+-------------------
+input chars = 
+is eyes she eclipses and predominates the whole of her sex. it was not that he felt any emotion akin"
+predicted chars = 
+g the matrer in the trop that i have been sure of the greve of the farth of the coundess of the reas"
+-------------------
+input chars = 
+in to love for irene adler. all emotions, and that one particularly, were abhorrent to his cold, pre"
+predicted chars = 
+ptisters on his hand and expeated in the sintory as his light and as and leaking before i fan the ot"
