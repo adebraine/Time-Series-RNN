@@ -1,7 +1,7 @@
 import numpy as np
 
 from keras.models import Sequential
-from keras.layers import Dense, Activation, LSTM
+from keras.layers import Dense, Activation, LSTM, CuDNNLSTM
 import keras
 
 
@@ -30,8 +30,8 @@ def window_transform_series(series, window_size):
 
 def build_part1_RNN(window_size):
     model = Sequential()
-    # model.add(CuDNNLSTM(5, input_shape=(window_size, 1)))
-    model.add(LSTM(50, input_shape=(window_size, 1)))
+    model.add(CuDNNLSTM(5, input_shape=(window_size, 1)))
+    # model.add(LSTM(50, input_shape=(window_size, 1)))
     # model.add(LSTM(50, input_shape=(window_size, 1), return_sequences=True))
     # model.add(LSTM(50))
     model.add(Dense(1))
