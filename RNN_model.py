@@ -3,7 +3,7 @@ from keras.layers import Dense, Activation, LSTM, CuDNNLSTM
 import keras
 import matplotlib.pyplot as plt
 from IPython.display import clear_output
-
+import os
 
 def build_RNN(window_size):
     model = Sequential()
@@ -20,7 +20,8 @@ def build_RNN(window_size):
 
 def train_model(split_sets, model, epochs, callbacklist,
                 batch_size, optimizer, verbose=0):
-    predictions = {}
+    path, dirs, files = next(os.walk("model_weights"))
+    file_count = len(files)
     if len(split_sets) > 4:
         model.compile(loss='mean_squared_error', optimizer=optimizer)
         trained_model = model.fit(split_sets['X_train'], split_sets['y_train'],
@@ -30,9 +31,7 @@ def train_model(split_sets, model, epochs, callbacklist,
                                                    split_sets['y_valid']),
                                   batch_size=batch_size, verbose=verbose)
 
-        predictions['train'] = model.predict(split_sets['X_train'])
-        predictions['test'] = model.predict(split_sets['X_test'])
-        predictions['valid'] = model.predict(split_sets['X_valid'])
+        model.save_weights('model_weights/{}_Valid_RNN_weights.hdf5'.format(file_count))
     else:
         model.compile(loss='mean_squared_error', optimizer=optimizer)
         trained_model = model.fit(split_sets['X_train'], split_sets['y_train'],
@@ -40,11 +39,22 @@ def train_model(split_sets, model, epochs, callbacklist,
                                   callbacks=callbacklist,
                                   batch_size=batch_size, verbose=verbose)
 
+        model.save_weights('model_weights/{}_NoValid_RNN_weights.hdf5'.format(file_count))
+
+    return trained_model
+
+def predict_model(split_sets, model):
+    predictions = {}
+
+    if len(split_sets) > 4:
+        predictions['train'] = model.predict(split_sets['X_train'])
+        predictions['test'] = model.predict(split_sets['X_test'])
+        predictions['valid'] = model.predict(split_sets['X_valid'])
+    else:
         predictions['train'] = model.predict(split_sets['X_train'])
         predictions['test'] = model.predict(split_sets['X_test'])
 
-    return trained_model, predictions
-
+    return predictions
 
 # https://gist.github.com/stared/dfb4dfaf6d9a8501cd1cc8b8cb806d2e
 # Below is live plot
@@ -81,7 +91,6 @@ class epochN(keras.callbacks.Callback):
         self.i = 0
 
     def on_epoch_end(self, epoch, logs={}):
-        self.logs.append(logs)
         self.i += 1
         clear_output(wait=True)
         print('Epoch {}/{}'.format(self.i, self.total_epochs))

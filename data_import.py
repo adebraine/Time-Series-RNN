@@ -1,6 +1,7 @@
 import numpy as np
 from sklearn import preprocessing
 import matplotlib.pyplot as plt
+import time
 
 def import_dataset(path):
     test1 = np.loadtxt(path)
